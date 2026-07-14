@@ -36,7 +36,6 @@ if command -v fnm >/dev/null 2>&1; then
   echo "Setting fnm default Node to lts-latest..."
   fnm install --lts
   fnm default lts-latest
-  fnm exec --using=lts-latest -- npm install -g @earendil-works/pi-coding-agent
 fi
 
 echo
