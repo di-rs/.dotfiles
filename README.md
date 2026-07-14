@@ -9,8 +9,9 @@ Each top-level directory is a stow package whose internal path mirrors `$HOME`.
 ## Layout
 
 ```
-brew/.Brewfile                  (macOS only)
-macos/.zprofile                 (macOS only)
+brew/.Brewfile                                                          (macOS only)
+macos/.zprofile                                                         (macOS only)
+karabiner/.config/karabiner/assets/complex_modifications/*.json         (macOS only)
 helix/.config/helix/config.toml
 ghostty/.config/ghostty/config.ghostty
 zsh/.zshrc .zshenv .zimrc
@@ -20,9 +21,25 @@ agent-skills/.agents/.skill-lock.json
 claude/.claude/settings.json .claude/plugins/known_marketplaces.json
 ```
 
-`brew` and `macos` are only stowed on macOS (`install.sh` checks `uname -s`).
-On Linux, `.Brewfile` and the Mac-specific `.zprofile` PATH entries are
-skipped entirely — everything else is cross-platform.
+`brew`, `macos`, and `karabiner` are only stowed on macOS (`install.sh`
+checks `uname -s`). On Linux, `.Brewfile`, the Mac-specific `.zprofile` PATH
+entries, and the Karabiner rule are skipped entirely — everything else is
+cross-platform.
+
+Karabiner writes its own live state (`karabiner.json`, `automatic_backups/`,
+logs) directly into `~/.config/karabiner`, so only the specific rule file
+under `assets/complex_modifications/` is stowed — `install.sh` pre-creates
+real directories down to that file so stow doesn't turn the whole
+`~/.config/karabiner` directory into a symlink into this repo (it did, once;
+don't let that regress).
+
+`caps_lock_to_f13.json` remaps Caps Lock to F13, which herdr's `config.toml`
+uses as its `prefix` key (a raw Caps Lock press can't be bound directly —
+it's a hardware toggle, not a normal keycode, until remapped). After
+stowing, Karabiner needs one-time manual setup that can't be scripted:
+open Karabiner-Elements, grant Input Monitoring + Accessibility permissions
+when prompted, then go to Complex Modifications → Add rule → enable
+"Caps Lock to F13 (for herdr prefix)".
 
 `.Brewfile` is generated with `brew bundle dump` and read via
 `brew bundle --global` (which looks for `~/.Brewfile`). Regenerate it after
@@ -57,11 +74,10 @@ npx skills experimental_install -g
 fnm has no config file — its behavior comes from env vars set in `.zshrc`
 (already tracked) plus whichever version is symlinked as its `default` alias,
 which lives in fnm's data dir, not something stow can track. `install.sh`
-pins that explicitly: `fnm install --lts && fnm default lts-latest`, then
-reinstalls the global `pi` npm package under it. Don't hardcode a Node bin
-path into `.zshrc` for tools like `pi` — that silently pins to whatever
-version was default at the time and stops tracking `fnm default` when it
-changes (this repo hit exactly that bug once).
+pins that explicitly: `fnm install --lts && fnm default lts-latest`. Don't
+hardcode a Node bin path into `.zshrc` for tools like `pi` — that silently
+pins to whatever version was default at the time and stops tracking
+`fnm default` when it changes (this repo hit exactly that bug once).
 
 ## What's deliberately excluded
 

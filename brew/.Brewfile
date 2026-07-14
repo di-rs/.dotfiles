@@ -28,6 +28,8 @@ brew "zoxide"
 cask "claude-code"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Keyboard customiser
+cask "karabiner-elements"
 # Native terminal coding agents command center
 cask "supacode"
 # Google Chromium, sans integration with Google

@@ -1,0 +1,15 @@
+{
+  "title": "Caps Lock to F13 (for herdr prefix)",
+  "rules": [
+    {
+      "description": "Caps Lock to F13",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "caps_lock" },
+          "to": [{ "key_code": "f13" }]
+        }
+      ]
+    }
+  ]
+}

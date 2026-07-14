@@ -8,9 +8,9 @@ PACKAGES=(helix ghostty zsh herdr pi agent-skills claude)
 IS_MACOS=false
 [[ "$(uname -s)" == "Darwin" ]] && IS_MACOS=true
 
-# brew (.Brewfile) and macos (.zprofile) are Mac-only; skip on Linux.
+# brew (.Brewfile), macos (.zprofile), and karabiner are Mac-only; skip on Linux.
 if $IS_MACOS; then
-  PACKAGES+=(brew macos)
+  PACKAGES+=(brew macos karabiner)
 fi
 
 if ! command -v stow >/dev/null 2>&1; then
@@ -22,6 +22,13 @@ if ! command -v stow >/dev/null 2>&1; then
          "manager (e.g. apt install stow) and re-run this script."
     exit 1
   fi
+fi
+
+# Karabiner writes its own live state (karabiner.json, backups, logs) into
+# ~/.config/karabiner. Pre-create real directories down to the rule file so
+# stow only symlinks that one file, not the whole directory.
+if $IS_MACOS; then
+  mkdir -p ~/.config/karabiner/assets/complex_modifications
 fi
 
 cd "$DOTFILES_DIR"
