@@ -1,0 +1,10 @@
+theme = "tokyonight"
+
+[editor]
+line-number = "relative"
+
+# Diff hunk navigation (built-in defaults, no config needed):
+#   ]g   jump to next changed hunk
+#   [g   jump to previous changed hunk
+#   ]G   jump to last changed hunk
+#   [G   jump to first changed hunk
