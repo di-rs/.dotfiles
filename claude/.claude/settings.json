@@ -1,4 +1,12 @@
 {
+  "env": {
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
+  },
   "hooks": {
     "SessionStart": [
       {
@@ -11,18 +19,23 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/dima/personal/.dotfiles/herdr/reload-helix.sh'",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   },
+  "feedbackSurveyRate": 0,
+  "effortLevel": "high",
   "tui": "fullscreen",
   "theme": "dark",
-  "effortLevel": "high",
-  "feedbackSurveyRate": 0,
-  "env": {
-    "DISABLE_TELEMETRY": "1",
-    "DISABLE_ERROR_REPORTING": "1",
-    "DISABLE_BUG_COMMAND": "1",
-    "DISABLE_FEEDBACK_COMMAND": "1",
-    "DISABLE_AUTOUPDATER": "1",
-    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
-  }
+  "model": "opus"
 }

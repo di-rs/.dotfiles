@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/dima/.zsh/completions:"* ]]; then export FPATH="/Users/dima/.zsh/completions:$FPATH"; fi
 
 
 # opencode
@@ -27,3 +29,11 @@ dotsync() {
     && git -C ~/personal/.dotfiles commit -m "${*:-update $(date '+%Y-%m-%d %H:%M')}" \
     && git -C ~/personal/.dotfiles push
 }
+
+# bun completions
+[ -s "/Users/dima/.bun/_bun" ] && source "/Users/dima/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+. "/Users/dima/.deno/env"

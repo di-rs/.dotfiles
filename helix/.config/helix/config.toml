@@ -10,7 +10,7 @@ hidden = false
 [editor.auto-save]
 focus-lost = true
 after-delay.enable = true
-after-delay.timeout-ms = 3000
+after-delay.timeout = 3000
 
 # Diff hunk navigation (built-in defaults, no config needed):
 #   ]g   jump to next changed hunk
