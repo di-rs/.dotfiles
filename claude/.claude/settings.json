@@ -34,6 +34,10 @@
     ]
   },
   "feedbackSurveyRate": 0,
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "skipAutoPermissionPrompt": true,
   "effortLevel": "high",
   "tui": "fullscreen",
   "theme": "dark",

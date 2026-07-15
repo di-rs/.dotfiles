@@ -1,6 +1,6 @@
 {
   "lastChangelogVersion": "0.80.6",
-  "theme": "dark",
+  "theme": "ayu-dark",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-8",
   "defaultThinkingLevel": "medium",
