@@ -32,8 +32,9 @@ posts the inline notes you leave back to the PR as a review (needs `gh`).
 
 `git/personal/.gitconfig` sets the **di-rs** (personal) identity and is loaded
 only for repos under `~/personal/` — including this one. It sets `user.email`
-plus `credential.https://github.com.username = di-rs`, so `gh` serves the di-rs
-token there while everything else stays on the work account.
+and a credential helper that fetches the di-rs token via `gh auth token -u
+di-rs` (gh's default helper only serves the *active* account, so it can't
+switch per-folder). Everything outside `~/personal/` stays on the work account.
 
 Two things are *machine-local* and not tracked here (they hold or select the
 work identity, which differs per device), so set them up once on each machine:
