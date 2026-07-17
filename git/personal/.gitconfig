@@ -1,0 +1,15 @@
+# Personal (di-rs) identity. Loaded only for repos under ~/personal/ via the
+# `includeIf "gitdir:~/personal/"` line in the machine-local ~/.gitconfig
+# (see the repo README — that include and the work identity are per-machine and
+# deliberately not tracked here). Everything outside ~/personal/ stays on the
+# work account.
+[user]
+	name = Dmitriy Popov
+	email = 75884109+di-rs@users.noreply.github.com
+# gh's default credential helper only serves the *active* account, so it can't
+# switch per-folder. Clear the inherited helper and fetch the di-rs token
+# explicitly (works regardless of which gh account is active).
+[credential "https://github.com"]
+	helper =
+	helper = "!f() { test \"$1\" = get && printf 'username=di-rs\\npassword=%s\\n' \"$(gh auth token -u di-rs)\"; }; f"
+	username = di-rs

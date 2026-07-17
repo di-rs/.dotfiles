@@ -1,39 +1,5 @@
 {
-  "env": {
-    "DISABLE_TELEMETRY": "1",
-    "DISABLE_ERROR_REPORTING": "1",
-    "DISABLE_BUG_COMMAND": "1",
-    "DISABLE_FEEDBACK_COMMAND": "1",
-    "DISABLE_AUTOUPDATER": "1",
-    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/Users/dima/.claude/hooks/herdr-agent-state.sh' session",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write|NotebookEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/Users/dima/personal/.dotfiles/herdr/reload-helix.sh'",
-            "timeout": 5
-          }
-        ]
-      }
-    ]
-  },
-  "feedbackSurveyRate": 0,
+  "model": "opus[1m]",
   "permissions": {
     "defaultMode": "auto"
   },
@@ -41,5 +7,99 @@
   "effortLevel": "high",
   "tui": "fullscreen",
   "theme": "dark",
-  "model": "opus"
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "plannotator@plannotator": true,
+    "ponytail@ponytail": true,
+    "revdiff@revdiff": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "env": {
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "DISABLE_TELEMETRY": "1"
+  },
+  "extraKnownMarketplaces": {
+    "365-skills": {
+      "source": {
+        "repo": "Agents365-ai/365-skills",
+        "source": "github"
+      }
+    },
+    "caveman": {
+      "source": {
+        "repo": "JuliusBrussee/caveman",
+        "source": "github"
+      }
+    },
+    "plannotator": {
+      "source": {
+        "repo": "backnotprop/plannotator",
+        "source": "github"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
+    },
+    "revdiff": {
+      "source": {
+        "repo": "umputun/revdiff",
+        "source": "github"
+      }
+    }
+  },
+  "feedbackSurveyRate": 0,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/home/dima/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "python3 '/home/dima/.claude/hooks/check-pr-title.py'",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "if command -v osascript >/dev/null 2>&1; then osascript -e 'display notification \"Turn finished\" with title \"Claude Code\"'; elif command -v notify-send >/dev/null 2>&1; then notify-send 'Claude Code' 'Turn finished'; fi",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "if command -v osascript >/dev/null 2>&1; then osascript -e 'display notification \"Needs your input\" with title \"Claude Code\"'; elif command -v notify-send >/dev/null 2>&1; then notify-send 'Claude Code' 'Needs your input'; fi",
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ]
+  }
 }

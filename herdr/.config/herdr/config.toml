@@ -60,7 +60,7 @@ name = "tokyo-night"
 # Named punctuation such as minus, comma, ampersand, plus, and backtick is also accepted.
 # Most reliable direct bindings are ctrl+letter, function keys, and explicit modified chords.
 # alt+..., cmd/super, and punctuation-with-modifiers may depend on your terminal/tmux setup.
-prefix = "f13" # Caps Lock, remapped via Karabiner (see ../karabiner)
+# prefix = "ctrl+b"
 
 # Prefix-mode actions
 # help = "prefix+?"
@@ -218,7 +218,7 @@ prefix = "f13" # Caps Lock, remapped via Karabiner (see ../karabiner)
 
 # Play sounds when agents change state in background workspaces
 [ui.sound]
-enabled = false
+# enabled = true
 # Optional custom mp3 sound files. Relative paths are resolved from this config file's directory.
 # path = "sounds/notification.mp3"   # one mp3 file for all sound notifications
 # done_path = "sounds/done.mp3"      # overrides only finished notifications

@@ -12,14 +12,47 @@ Each top-level directory is a stow package whose internal path mirrors `$HOME`.
 brew/.Brewfile                                                          (macOS only)
 macos/.zprofile                                                         (macOS only)
 karabiner/.config/karabiner/assets/complex_modifications/*.json         (macOS only)
-helix/.config/helix/config.toml
+helix/.config/helix/config.toml .config/helix/languages.toml
 ghostty/.config/ghostty/config.ghostty
 zsh/.zshrc .zshenv .zimrc
 herdr/.config/herdr/config.toml
 pi/.pi/agent/settings.json
 agent-skills/.agents/.skill-lock.json
-claude/.claude/settings.json .claude/plugins/known_marketplaces.json
+claude/.claude/settings.json
+bin/.local/bin/*                                                        (personal scripts, on PATH via .zshenv)
+git/.config/git/ignore  personal/.gitconfig                             (global excludes + di-rs identity)
+hunk/.config/hunk/config.toml
 ```
+
+`bin` holds personal scripts stowed into `~/.local/bin` (already on `PATH`
+via `zsh/.zshenv`). `review <pr>` opens a PR's diff in the hunk TUI and
+posts the inline notes you leave back to the PR as a review (needs `gh`).
+
+## Git identity (work vs di-rs)
+
+`git/personal/.gitconfig` sets the **di-rs** (personal) identity and is loaded
+only for repos under `~/personal/` — including this one. It sets `user.email`
+plus `credential.https://github.com.username = di-rs`, so `gh` serves the di-rs
+token there while everything else stays on the work account.
+
+Two things are *machine-local* and not tracked here (they hold or select the
+work identity, which differs per device), so set them up once on each machine:
+
+1. Add the conditional include to `~/.gitconfig` (real file, untracked):
+
+   ```gitconfig
+   [includeIf "gitdir:~/personal/"]
+       path = ~/personal/.gitconfig
+   ```
+
+2. Log the di-rs account into `gh` alongside your default account:
+
+   ```sh
+   gh auth login   # GitHub.com → HTTPS → account di-rs
+   ```
+
+After that, commits and pushes from anywhere under `~/personal/` use di-rs
+automatically. Verify with `git -C ~/personal/.dotfiles config user.email`.
 
 `brew`, `macos`, and `karabiner` are only stowed on macOS (`install.sh`
 checks `uname -s`). On Linux, `.Brewfile`, the Mac-specific `.zprofile` PATH

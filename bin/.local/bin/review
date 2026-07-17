@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# review — review a GitHub PR diff in hunk, then post your inline notes
+# back to the PR as a single review.
+#
+#   review <pr-number|url|branch> [-y]
+#
+# Opens `gh pr diff` in the hunk TUI. Add inline comments, then quit (q).
+# Every review note you left is posted to the PR as an inline comment
+# (one COMMENT review). Use -y to skip the confirmation prompt.
+#
+# Deps: gh, hunk, python3.  The hunk daemon may shut down when its last
+# session's TUI quits, taking the snapshot with it — so we poll the live
+# session into a file while the TUI is up, and use the freshest snapshot.
+set -eu
+
+usage() { echo "usage: review <pr-number|url|branch> [-y]" >&2; exit 1; }
+
+PR=""
+AUTO_YES=0
+for a in "$@"; do
+  case "$a" in
+    -y|--yes)  AUTO_YES=1 ;;
+    -h|--help) usage ;;
+    -*)        echo "unknown flag: $a" >&2; usage ;;
+    *)         [ -z "$PR" ] && PR="$a" ;;
+  esac
+done
+[ -n "$PR" ] || usage
+
+for bin in gh hunk python3; do
+  command -v "$bin" >/dev/null 2>&1 || { echo "review: missing dependency: $bin" >&2; exit 1; }
+done
+
+# Resolve PR -> owner/repo/number/head-sha from the canonical URL (one call).
+IFS=$'\t' read -r URL NUMBER HEAD <<EOF
+$(gh pr view "$PR" --json url,number,headRefOid -q '[.url,.number,.headRefOid]|@tsv')
+EOF
+[ -n "${URL:-}" ] || { echo "review: could not resolve PR '$PR'" >&2; exit 1; }
+rest=${URL#*github.com/}          # OWNER/REPO/pull/N
+OWNER=${rest%%/*}
+rest=${rest#*/}
+REPO=${rest%%/*}
+
+# Snapshot existing hunk sessions so we can identify the one we launch.
+BEFORE=$(hunk session list --json 2>/dev/null \
+  | python3 -c 'import sys,json;print(",".join(s["sessionId"] for s in json.load(sys.stdin).get("sessions",[])))' \
+  || true)
+
+SNAP=$(mktemp)
+PAYLOAD=$(mktemp)
+trap 'rm -f "$SNAP" "$PAYLOAD"' EXIT
+
+# Poll the live session list into $SNAP while the TUI runs, keeping only the
+# freshest valid JSON (the daemon may vanish the instant the TUI quits).
+save_snapshot() {
+  local out
+  out=$(hunk session list --json 2>/dev/null || true)
+  case "$out" in *'"sessions"'*) printf '%s' "$out" >"$SNAP" ;; esac
+}
+( while :; do save_snapshot; sleep 0.3; done ) &
+POLLER=$!
+
+echo "Opening PR #$NUMBER ($OWNER/$REPO) in hunk."
+echo "  navigate: arrows / [ ] · comment: c → type → Ctrl+S to save (Esc cancels) · quit: q"
+gh pr diff "$PR" | hunk patch - || true
+
+kill "$POLLER" 2>/dev/null || true
+wait "$POLLER" 2>/dev/null || true
+save_snapshot   # one last try — freshest if the daemon outlived the TUI
+
+# Extract review notes from the session that appeared, build the review payload.
+COUNT=$(python3 - "$BEFORE" "$HEAD" "$PAYLOAD" "$SNAP" <<'PY'
+import sys, json
+before = set(filter(None, sys.argv[1].split(",")))
+head, out, snap = sys.argv[2], sys.argv[3], sys.argv[4]
+try:
+    with open(snap) as f:
+        sessions = json.load(f).get("sessions", [])
+except (OSError, ValueError):
+    print("0"); sys.exit(0)
+new = [s for s in sessions
+       if s["sessionId"] not in before and s.get("inputKind") == "patch"]
+if not new:
+    print("0"); sys.exit(0)
+sess = max(new, key=lambda s: s.get("launchedAt", ""))
+notes = sess.get("snapshot", {}).get("state", {}).get("reviewNotes", [])
+comments = []
+for n in notes:
+    body = (n.get("body") or n.get("summary") or "").strip()
+    if not body:
+        continue
+    if n.get("newRange"):
+        side, line = "RIGHT", n["newRange"][1]
+    elif n.get("oldRange"):
+        side, line = "LEFT", n["oldRange"][1]
+    else:
+        continue
+    comments.append({"path": n["filePath"], "line": line, "side": side, "body": body})
+if comments:
+    json.dump({"commit_id": head, "event": "COMMENT", "comments": comments}, open(out, "w"))
+print(str(len(comments)))
+PY
+)
+
+if [ "${COUNT:-0}" -eq 0 ]; then
+  echo "No review notes found — nothing posted."
+  exit 0
+fi
+
+echo "Collected $COUNT inline comment(s):"
+python3 -c 'import json,sys; [print(f"  {c[\"path\"]}:{c[\"line\"]} ({c[\"side\"]}) — {c[\"body\"].splitlines()[0]}") for c in json.load(open(sys.argv[1]))["comments"]]' "$PAYLOAD"
+
+if [ "$AUTO_YES" -ne 1 ]; then
+  printf 'Post to PR #%s? [y/N] ' "$NUMBER"
+  read -r ans </dev/tty || ans=""
+  case "$ans" in y|Y) ;; *) echo "Aborted."; exit 0 ;; esac
+fi
+
+gh api --method POST "repos/$OWNER/$REPO/pulls/$NUMBER/reviews" --input "$PAYLOAD" \
+  --jq '"Posted review \(.id) with \(.body // "") \(.state)"' \
+  && echo "Done: $URL"

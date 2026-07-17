@@ -1,0 +1,19 @@
+[language-server.vtsls]
+command = "vtsls"
+args = ["--stdio"]
+
+[[language]]
+name = "typescript"
+language-servers = ["vtsls"]
+
+[[language]]
+name = "tsx"
+language-servers = ["vtsls"]
+
+[[language]]
+name = "javascript"
+language-servers = ["vtsls"]
+
+[[language]]
+name = "jsx"
+language-servers = ["vtsls"]

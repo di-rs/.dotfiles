@@ -3,7 +3,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(helix ghostty zsh herdr pi agent-skills claude)
+PACKAGES=(helix ghostty zsh herdr pi agent-skills claude bin git hunk)
 
 IS_MACOS=false
 [[ "$(uname -s)" == "Darwin" ]] && IS_MACOS=true
