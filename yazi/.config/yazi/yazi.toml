@@ -1,0 +1,5 @@
+# Yazi file manager — https://yazi-rs.github.io/docs/configuration/yazi
+# Colors live in theme.toml + flavors/ayu-dark.yazi; keep this file for behavior.
+[mgr]
+# Show dotfiles, matching Helix's file picker ([editor.file-picker] hidden = false).
+show_hidden = true

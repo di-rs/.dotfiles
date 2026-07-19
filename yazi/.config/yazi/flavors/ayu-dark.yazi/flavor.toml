@@ -1,0 +1,164 @@
+# Ayu Dark for Yazi — canonical Ayu palette, matched to ghostty's built-in
+# "Ayu" theme so the file manager is in sync with helix / hunk / pi.
+#
+# Written against the yazi 26.x theme schema
+# (https://yazi-rs.github.io/schemas/theme.json) — validated tables/keys only.
+#
+# Palette:  bg #0b0e14  fg #bfbdb6  gold #e6b450  blue #59c2ff  green #aad94c
+#           yellow #ffb454  red #f07178  magenta #d2a6ff  cyan #95e6cb  gray #686868
+
+# : Manager (the file list) :
+
+[mgr]
+cwd = { fg = "#e6b450" }
+
+# Find
+find_keyword  = { fg = "#e6b450", bold = true, italic = true, underline = true }
+find_position = { fg = "#e6b450", bold = true, italic = true }
+
+# Symlink
+symlink_target = { fg = "#95e6cb", italic = true }
+
+# Marker (left gutter of copied / cut / marked / selected rows)
+marker_copied   = { fg = "#aad94c", bg = "#aad94c" }
+marker_cut      = { fg = "#f07178", bg = "#f07178" }
+marker_marked   = { fg = "#59c2ff", bg = "#59c2ff" }
+marker_selected = { fg = "#e6b450", bg = "#e6b450" }
+
+# Count badges (status bar)
+count_copied   = { fg = "#0b0e14", bg = "#aad94c" }
+count_cut      = { fg = "#0b0e14", bg = "#f07178" }
+count_selected = { fg = "#0b0e14", bg = "#e6b450" }
+
+# Divider between panes
+border_style = { fg = "#1e232b" }
+
+# : Tabs :
+
+[tabs]
+active   = { fg = "#0b0e14", bg = "#e6b450", bold = true }
+inactive = { fg = "#bfbdb6", bg = "#11151c" }
+
+# : Mode indicator (bottom-left) :
+
+[mode]
+normal_main = { fg = "#0b0e14", bg = "#e6b450", bold = true }
+normal_alt  = { fg = "#e6b450", bg = "#11151c" }
+select_main = { fg = "#0b0e14", bg = "#aad94c", bold = true }
+select_alt  = { fg = "#aad94c", bg = "#11151c" }
+unset_main  = { fg = "#0b0e14", bg = "#f07178", bold = true }
+unset_alt   = { fg = "#f07178", bg = "#11151c" }
+
+# : Status bar :
+
+[status]
+# Permissions
+perm_sep   = { fg = "#686868" }
+perm_type  = { fg = "#59c2ff" }
+perm_read  = { fg = "#e6b450" }
+perm_write = { fg = "#f07178" }
+perm_exec  = { fg = "#aad94c" }
+# Task progress
+progress_label  = { fg = "#bfbdb6", bold = true }
+progress_normal = { fg = "#e6b450", bg = "#11151c" }
+progress_error  = { fg = "#f07178", bg = "#11151c" }
+
+# : Which-key :
+
+[which]
+cols            = 3
+mask            = { bg = "#11151c" }
+cand            = { fg = "#95e6cb" }
+rest            = { fg = "#686868" }
+desc            = { fg = "#bfbdb6" }
+separator       = "  "
+separator_style = { fg = "#686868" }
+
+# : Confirm dialogs :
+
+[confirm]
+border  = { fg = "#e6b450" }
+title   = { fg = "#e6b450" }
+body    = { fg = "#bfbdb6" }
+list    = { fg = "#59c2ff" }
+btn_yes = { fg = "#0b0e14", bg = "#e6b450", bold = true }
+btn_no  = { fg = "#bfbdb6" }
+
+# : Spot (metadata popup) :
+
+[spot]
+border   = { fg = "#e6b450" }
+title    = { fg = "#e6b450" }
+tbl_col  = { fg = "#59c2ff" }
+tbl_cell = { fg = "#0b0e14", bg = "#e6b450" }
+
+# : Notifications :
+
+[notify]
+title_info  = { fg = "#aad94c" }
+title_warn  = { fg = "#e6b450" }
+title_error = { fg = "#f07178" }
+
+# : Pick (open-with, etc.) :
+
+[pick]
+border   = { fg = "#e6b450" }
+active   = { fg = "#d2a6ff", bold = true }
+inactive = { fg = "#bfbdb6" }
+
+# : Input :
+
+[input]
+border   = { fg = "#e6b450" }
+title    = { fg = "#bfbdb6" }
+value    = { fg = "#bfbdb6" }
+selected = { bg = "#11151c" }
+
+# : Completion :
+
+[cmp]
+border       = { fg = "#e6b450" }
+active       = { fg = "#0b0e14", bg = "#e6b450", bold = true }
+inactive     = { fg = "#bfbdb6" }
+icon_file    = { fg = "#59c2ff" }
+icon_folder  = { fg = "#e6b450" }
+icon_command = { fg = "#aad94c" }
+
+# : Tasks :
+
+[tasks]
+border  = { fg = "#e6b450" }
+title   = { fg = "#bfbdb6" }
+hovered = { fg = "#59c2ff", underline = true }
+
+# : Help :
+
+[help]
+on      = { fg = "#e6b450" }
+run     = { fg = "#aad94c" }
+desc    = { fg = "#bfbdb6" }
+hovered = { bg = "#11151c", bold = true }
+footer  = { fg = "#0b0e14", bg = "#bfbdb6" }
+
+# : File-list colors :
+
+[filetype]
+rules = [
+  # Directories
+  { url = "*/", fg = "#59c2ff" },
+  # Broken symlinks
+  { url = "*", is = "orphan", fg = "#f07178" },
+  # Executables
+  { url = "*", is = "exec", fg = "#aad94c" },
+  # Images
+  { mime = "image/*", fg = "#e6b450" },
+  # Audio / video
+  { mime = "{audio,video}/*", fg = "#d2a6ff" },
+  # Archives
+  { mime = "application/{,g}zip", fg = "#f07178" },
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#f07178" },
+  # Documents
+  { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#95e6cb" },
+  # Everything else
+  { url = "*", fg = "#bfbdb6" },
+]

@@ -1,0 +1,7 @@
+# Use the vendored ayu-dark flavor (flavors/ayu-dark.yazi) so Yazi matches the
+# Ayu Dark theme shared by ghostty, helix, hunk, and pi.
+#
+# Keep this file to [flavor] only — anything else here overrides the flavor.
+# https://yazi-rs.github.io/docs/flavors/overview
+[flavor]
+dark = "ayu-dark"
