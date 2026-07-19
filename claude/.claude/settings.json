@@ -56,17 +56,6 @@
         "matcher": "*"
       }
     ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "python3 '$HOME/.claude/hooks/check-pr-title.py'",
-            "type": "command"
-          }
-        ],
-        "matcher": "Bash"
-      }
-    ],
     "Stop": [
       {
         "hooks": [
