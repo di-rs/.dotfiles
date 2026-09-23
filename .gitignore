@@ -1,6 +1,3 @@
-# Defense-in-depth: this repo should only ever contain the files intentionally
-# copied in by install.sh. These patterns guard against accidentally staging
-# secrets if a future package is added carelessly.
 *auth*.json
 *credentials*
 *.pem

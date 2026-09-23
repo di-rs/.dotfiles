@@ -1,8 +1,0 @@
-{
-  "lastChangelogVersion": "0.80.6",
-  "theme": "ayu-dark",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
-  "defaultThinkingLevel": "medium",
-  "hideThinkingBlock": true
-}
