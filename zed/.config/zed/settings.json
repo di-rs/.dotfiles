@@ -7,14 +7,68 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "cli_default_open_behavior": "existing_window",
+  "terminal": {
+    "toolbar": {
+      "breadcrumbs": false
+    },
+    "keep_selection_on_copy": false,
+    "copy_on_select": true
+  },
   "autosave": {
     "after_delay": {
       "milliseconds": 1000
     }
   },
-  "cli_default_open_behavior": "existing_window",
-  "helix_mode": true,
+  "tab_bar": {
+    "show_pinned_tabs_in_separate_row": false,
+    "show": false
+  },
+  "title_bar": {
+    "show_user_picture": false,
+    "show_user_menu": false,
+    "show_sign_in": false,
+    "show_onboarding_banner": false,
+    "show_project_items": true,
+    "show_worktree_name": false
+  },
+  "preview_tabs": {
+    "enabled": true
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "relative_line_numbers": "enabled",
+  "cursor_blink": false,
+  "search": {
+    "button": false
+  },
   "disable_ai": true,
+  "project_panel": {
+    "button": true,
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": "right"
+  },
+  "agent": {
+    "button": false,
+    "dock": "left",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "tree_view": true,
+    "dock": "right"
+  },
+  "helix_mode": true,
+  "icon_theme": "Zed (Default)",
   "telemetry": {
     "diagnostics": false,
     "metrics": false,
@@ -25,8 +79,22 @@
   "ui_font_size": 16,
   "buffer_font_size": 15,
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Ayu Light",
     "dark": "Ayu Dark",
   },
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy"
+        }
+      }
+    },
+    "steel-language-server": {
+      "binary": {
+        "path": "steel-language-server"
+      }
+    }
+  }
 }

@@ -1,0 +1,36 @@
+/* ~/.config/chawan/user.css
+ * Make code read well in a text browser.
+ * !important is required: author (site) CSS beats user CSS unless marked so. */
+
+/* Code blocks: a shaded slab with padding + vertical spacing, so code is
+ * clearly set apart from prose. Explicit fg+bg guarantees contrast anywhere. */
+pre {
+  background-color: #23262e !important;
+  color: #e6e6e6 !important;
+  padding-left: 1ch !important;
+  padding-right: 1ch !important;
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+}
+
+/* Inline `code` mid-sentence: a warm token color so it stands out. */
+code {
+  color: #e5c07b !important;
+}
+
+/* ...but don't recolor or re-shade code that's already inside a block. */
+pre code {
+  color: inherit !important;
+  background-color: transparent !important;
+}
+
+/* Blockquotes / mdBook note boxes: a left bar + indent. */
+blockquote {
+  border-left: 2px solid #5c6370 !important;
+  padding-left: 1ch !important;
+}
+
+/* Keep links underlined so they're detectable without relying on color. */
+a[href] {
+  text-decoration: underline !important;
+}

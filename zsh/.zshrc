@@ -61,3 +61,5 @@ alias p="pnpm"
 
 # Vite+ (https://viteplus.dev)
 [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
+
+eval "$(atuin init zsh)"

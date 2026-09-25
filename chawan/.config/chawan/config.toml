@@ -1,0 +1,20 @@
+# ~/.config/chawan/config.toml
+# Readability + Ghostty-native rendering for chawan (cha).
+
+[buffer]
+# Load inline images (docs often ship diagrams). Ghostty speaks the kitty protocol.
+images = true
+
+# Apply the rules in user.css on top of every page. The @import path is
+# relative to this config directory (~/.config/chawan).
+user-style = '''
+@import 'user.css';
+'''
+
+[display]
+# 24-bit color so author syntax colors / links render faithfully in Ghostty.
+color-mode = "true-color"
+# "auto" detects Ghostty's kitty graphics protocol for inline images.
+image-mode = "auto"
+# (minimum-contrast already defaults to 100, which forces body text to stay
+#  legible against the terminal background — that's why most prose reads fine.)
