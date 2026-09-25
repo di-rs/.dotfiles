@@ -24,8 +24,12 @@ brew "herdr"
 brew "hunk"
 # Command-line benchmarking tool
 brew "hyperfine"
+# Dynamic language and bytecode vm
+brew "janet"
 # Handy way to save and run project-specific commands
 brew "just"
+# Deep clean and optimize your Mac
+brew "mole"
 # Modern shell for the GitHub era
 brew "nushell"
 # Fast Git hook manager written in Rust, drop-in alternative to pre-commit
@@ -66,12 +70,15 @@ cask "ghostty"
 cask "handy"
 # Keyboard customiser
 cask "karabiner-elements"
+# Control your tools with a few keystrokes
+cask "raycast"
 # Messaging app with a focus on speed and security
 cask "telegram"
 # Google Chromium, sans integration with Google
 cask "ungoogled-chromium"
 # Multiplayer code editor
 cask "zed@preview"
+cargo "bootimage"
 cargo "cargo-audit"
 cargo "cargo-generate"
 cargo "cargo-nextest"
