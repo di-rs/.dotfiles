@@ -63,3 +63,8 @@ alias p="pnpm"
 [ -f "$HOME/.vite-plus/env" ] && . "$HOME/.vite-plus/env"
 
 eval "$(atuin init zsh)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/dima/.lmstudio/bin"
+# End of LM Studio CLI section
+

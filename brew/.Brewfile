@@ -12,6 +12,8 @@ brew "docker"
 brew "docker-compose"
 # Modern, maintained replacement for ls
 brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
 # Fast and simple Node.js version manager
 brew "fnm"
 # GitHub command-line tool
@@ -70,8 +72,12 @@ cask "ghostty"
 cask "handy"
 # Keyboard customiser
 cask "karabiner-elements"
-# Control your tools with a few keystrokes
-cask "raycast"
+# Discover, download, and run local LLMs
+cask "lm-studio"
+# Local-first alternative to Logitech Options+ for HID++ devices
+cask "openlogi"
+# System monitor for the menu bar
+cask "stats"
 # Messaging app with a focus on speed and security
 cask "telegram"
 # Google Chromium, sans integration with Google
@@ -88,3 +94,4 @@ cargo "steel-forge", source: "https://github.com/mattwparas/steel.git"
 cargo "steel-interpreter", source: "https://github.com/mattwparas/steel.git"
 cargo "steel-language-server", source: "https://github.com/mattwparas/steel.git"
 cargo "tokio-console"
+npm "@earendil-works/pi-coding-agent"

@@ -7,6 +7,24 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "proxy": "",
+  "show_edit_predictions": false,
+  "debugger": {
+    "button": true
+  },
+  "status_bar": {
+    "show_active_file": false
+  },
+  "edit_predictions": {
+    "allow_data_collection": "no",
+    "provider": "open_ai_compatible_api",
+    "open_ai_compatible_api": {
+      "max_output_tokens": 128,
+      "prompt_format": "qwen",
+      "model": "qwen2.5-coder-3b",
+      "api_url": "http://localhost:1234/v1/completions"
+    }
+  },
   "cli_default_open_behavior": "existing_window",
   "terminal": {
     "toolbar": {
@@ -45,10 +63,10 @@
   "search": {
     "button": false
   },
-  "disable_ai": true,
+  "disable_ai": false,
   "project_panel": {
     "button": true,
-    "dock": "left"
+    "dock": "right"
   },
   "outline_panel": {
     "dock": "right"
@@ -58,9 +76,32 @@
     "dock": "right"
   },
   "agent": {
+    "default_profile": "write",
+    "threads_sidebar": {
+      "position": "right"
+    },
+    "default_model": {
+      "effort": "high",
+      "provider": "x_ai_subscribed",
+      "model": "grok-4.7",
+      "enable_thinking": true
+    },
     "button": false,
     "dock": "left",
-    "favorite_models": [],
+    "favorite_models": [
+      {
+        "provider": "x_ai_subscribed",
+        "model": "grok-4.7",
+        "enable_thinking": true,
+        "effort": "high"
+      },
+      {
+        "provider": "x_ai_subscribed",
+        "model": "grok-4.6",
+        "enable_thinking": true,
+        "effort": "high"
+      }
+    ],
     "model_parameters": []
   },
   "git_panel": {
